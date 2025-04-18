@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meal Plan</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background: linear-gradient(
+        rgba(0, 0, 0, 0.5), 
+        rgba(0, 0, 0, 0.5)
+      ), 
+      url('https://images.unsplash.com/photo-1606787366850-de6330128bfc?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGZvb2QlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .container {
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: auto;
+      text-align: center; 
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px #FFFFFF;
+    }
+
+    .meal-plan {
+      display: flex;
+      flex-wrap: wrap; 
+      justify-content: center; 
+      gap: 20px; 
+    }
+
+    .meal-card {
+  border-radius: 12px;
+  padding: 20px;
+  width: calc(33.33% - 20px); 
+  background-color: rgba(0, 0, 0, 0.9); 
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color: #fff;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.meal-card:hover {
+  transform: translateY(-10px); 
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3); 
+}
+
+    @media (max-width: 768px) {
+      .meal-card {
+        width: calc(50% - 20px); 
+      }
+    }
+
+    @media (max-width: 480px) {
+      .meal-card {
+        width: calc(100% - 20px); 
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your 7-Day Meal Plan</h1>
+    <div id="meal-plan" class="meal-plan"></div> <!-- Meal cards container -->
+  </div>
+
+  <script>
+    window.onload = function() {
+      const mealPlan = JSON.parse(localStorage.getItem('mealPlan'));
+  
+      if (!mealPlan) {
+        alert('No meal plan found!');
+        return;
+      }
+  
+      const container = document.getElementById('meal-plan');
+  
+      mealPlan.forEach(day => {
+        const card = document.createElement('div');
+        card.className = 'meal-card';
+        card.innerHTML = `
+          <h3 style="text-align: center;">${day.day}</h3>
+          <p><strong>🍽 Breakfast:</strong> ${day.breakfast}</p>
+          <p><strong>🥗 Lunch:</strong> ${day.lunch}</p>
+          <p><strong>🍛 Dinner:</strong> ${day.dinner}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
